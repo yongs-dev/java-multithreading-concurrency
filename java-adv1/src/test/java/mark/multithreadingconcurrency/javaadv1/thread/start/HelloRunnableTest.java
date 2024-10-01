@@ -21,7 +21,7 @@ public class HelloRunnableTest {
         log.info("{} test() end", Thread.currentThread().getName());
     }
 
-    static class HelloRunnable implements Runnable {
+    public static class HelloRunnable implements Runnable {
 
         @Override
         public void run() {
