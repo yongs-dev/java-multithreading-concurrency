@@ -27,7 +27,7 @@ import static mark.multithreadingconcurrency.javaadv1.util.ThreadUtils.sleep;
 public class BankTest {
 
     @Test
-    public void test() throws InterruptedException {
+    public void testV1() throws InterruptedException {
         BankAccount account = new BankAccountV1(1000);
 
         Thread t1 = new Thread(new WithdrawTask(account, 800), "t1");
@@ -47,7 +47,7 @@ public class BankTest {
     }
 
     @Test
-    public void test_using_synchronized_method() throws InterruptedException {
+    public void testV2_using_synchronized_method() throws InterruptedException {
         BankAccount account = new BankAccountV2(1000);
 
         Thread t1 = new Thread(new WithdrawTask(account, 800), "t1");
@@ -67,8 +67,68 @@ public class BankTest {
     }
 
     @Test
-    public void test_using_synchronized_block() throws InterruptedException {
+    public void testV3_using_synchronized_block() throws InterruptedException {
         BankAccount account = new BankAccountV3(1000);
+
+        Thread t1 = new Thread(new WithdrawTask(account, 800), "t1");
+        Thread t2 = new Thread(new WithdrawTask(account, 800), "t2");
+
+        t1.start();
+        t2.start();
+
+        sleep(500); // 검증 완료까지 잠시 대기
+        log("t1 state: " + t1.getState());
+        log("t2 state: " + t2.getState());
+
+        t1.join();
+        t2.join();
+
+        log("최종 잔액: " + account.getBalance());
+    }
+
+    @Test
+    public void testV4_ReentrantLock_lock() throws InterruptedException {
+        BankAccount account = new BankAccountV4(1000);
+
+        Thread t1 = new Thread(new WithdrawTask(account, 800), "t1");
+        Thread t2 = new Thread(new WithdrawTask(account, 800), "t2");
+
+        t1.start();
+        t2.start();
+
+        sleep(500); // 검증 완료까지 잠시 대기
+        log("t1 state: " + t1.getState());
+        log("t2 state: " + t2.getState());
+
+        t1.join();
+        t2.join();
+
+        log("최종 잔액: " + account.getBalance());
+    }
+
+    @Test
+    public void testV5_ReentrantLock_tryLock() throws InterruptedException {
+        BankAccount account = new BankAccountV5(1000);
+
+        Thread t1 = new Thread(new WithdrawTask(account, 800), "t1");
+        Thread t2 = new Thread(new WithdrawTask(account, 800), "t2");
+
+        t1.start();
+        t2.start();
+
+        sleep(500); // 검증 완료까지 잠시 대기
+        log("t1 state: " + t1.getState());
+        log("t2 state: " + t2.getState());
+
+        t1.join();
+        t2.join();
+
+        log("최종 잔액: " + account.getBalance());
+    }
+
+    @Test
+    public void testV6_ReentrantLock_tryLock_time() throws InterruptedException {
+        BankAccount account = new BankAccountV6(1000);
 
         Thread t1 = new Thread(new WithdrawTask(account, 800), "t1");
         Thread t2 = new Thread(new WithdrawTask(account, 800), "t2");
