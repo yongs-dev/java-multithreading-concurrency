@@ -42,6 +42,66 @@ public class BoundedTest {
         consumerFirst(queue);   // 소비자 먼저 실행
     }
 
+    @Test
+    void test_V4() throws InterruptedException {
+        // 1. BoundedQueue 선택
+        BoundedQueue queue = new BoundedQueueV4(2);
+
+        // 2. 생산자, 소비자 실행 순서 선택. 반드시 하나만 선택
+        producerFirst(queue);   // 생산자 먼저 실행
+//        consumerFirst(queue);   // 소비자 먼저 실행
+    }
+
+    @Test
+    void test_V5() throws InterruptedException {
+        // 1. BoundedQueue 선택
+        BoundedQueue queue = new BoundedQueueV5(2);
+
+        // 2. 생산자, 소비자 실행 순서 선택. 반드시 하나만 선택
+//        producerFirst(queue);   // 생산자 먼저 실행
+        consumerFirst(queue);   // 소비자 먼저 실행
+    }
+
+    @Test
+    void test_V6_1() throws InterruptedException {
+        // 1. BoundedQueue 선택
+        BoundedQueue queue = new BoundedQueueV6_1(2);
+
+        // 2. 생산자, 소비자 실행 순서 선택. 반드시 하나만 선택
+//        producerFirst(queue);   // 생산자 먼저 실행
+        consumerFirst(queue);   // 소비자 먼저 실행
+    }
+
+    @Test
+    void test_V6_2() throws InterruptedException {
+        // 1. BoundedQueue 선택
+        BoundedQueue queue = new BoundedQueueV6_2(2);
+
+        // 2. 생산자, 소비자 실행 순서 선택. 반드시 하나만 선택
+        producerFirst(queue);   // 생산자 먼저 실행
+//        consumerFirst(queue);   // 소비자 먼저 실행
+    }
+
+    @Test
+    void test_V6_3() throws InterruptedException {
+        // 1. BoundedQueue 선택
+        BoundedQueue queue = new BoundedQueueV6_3(2);
+
+        // 2. 생산자, 소비자 실행 순서 선택. 반드시 하나만 선택
+        producerFirst(queue);   // 생산자 먼저 실행
+//        consumerFirst(queue);   // 소비자 먼저 실행
+    }
+
+    @Test
+    void test_V6_4() throws InterruptedException {
+        // 1. BoundedQueue 선택
+        BoundedQueue queue = new BoundedQueueV6_4(2);
+
+        // 2. 생산자, 소비자 실행 순서 선택. 반드시 하나만 선택
+        producerFirst(queue);   // 생산자 먼저 실행
+//        consumerFirst(queue);   // 소비자 먼저 실행
+    }
+
     private void producerFirst(BoundedQueue queue) {
         log("== [생산자 먼저 실행] 시작, " + queue.getClass().getSimpleName() + " ==");
         List<Thread> threads = new ArrayList<>();
