@@ -3,36 +3,37 @@ package mark.multithreadingconcurrency.javaadv1.thread.executor.quiz;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
 import java.util.concurrent.*;
 
 import static mark.multithreadingconcurrency.javaadv1.util.MyLogger.log;
 import static mark.multithreadingconcurrency.javaadv1.util.ThreadUtils.sleep;
 
-public class OrderService {
+public class OrderServiceTest {
 
     private final ExecutorService es = Executors.newFixedThreadPool(10);
 
     @Test
     void orderTest() throws InterruptedException, ExecutionException {
-        String orderNo = "orderNo_01";
-        InventoryTask inventoryTask = new InventoryTask(orderNo);
-        ShippingTask shippingTask = new ShippingTask(orderNo);
-        AccountingTask accountingTask = new AccountingTask(orderNo);
+        try {
+            String orderNo = "orderNo_01";
+            InventoryTask inventoryTask = new InventoryTask(orderNo);
+            ShippingTask shippingTask = new ShippingTask(orderNo);
+            AccountingTask accountingTask = new AccountingTask(orderNo);
 
-        Future<Boolean> inventoryFuture = es.submit(inventoryTask);
-        Future<Boolean> shippingFuture = es.submit(shippingTask);
-        Future<Boolean> accountingFuture = es.submit(accountingTask);
+            Future<Boolean> inventoryFuture = es.submit(inventoryTask);
+            Future<Boolean> shippingFuture = es.submit(shippingTask);
+            Future<Boolean> accountingFuture = es.submit(accountingTask);
 
-        Boolean inventoryResult = inventoryFuture.get();
-        Boolean shippingResult = shippingFuture.get();
-        Boolean accountResult = accountingFuture.get();
+            Boolean inventoryResult = inventoryFuture.get();
+            Boolean shippingResult = shippingFuture.get();
+            Boolean accountResult = accountingFuture.get();
 
-        if (inventoryResult && shippingResult && accountResult) {
-            log("모든 주문 처리가 성공적으로 완료되었습니다.");
+            if (inventoryResult && shippingResult && accountResult) {
+                log("모든 주문 처리가 성공적으로 완료되었습니다.");
+            }
+        } finally {
+            es.close();
         }
-
-        es.close();
     }
 
     @RequiredArgsConstructor
